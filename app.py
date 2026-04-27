@@ -1,4 +1,6 @@
 import streamlit as st
+import time
+
 from data_engine import get_data
 from indicators import add_indicators
 from model import train_model
@@ -7,6 +9,18 @@ from risk_management import position_size
 
 # ================= UI =================
 st.title("🤖 AI Trading Bot")
+
+# ================= SIDEBAR =================
+st.sidebar.title("⚙️ Settings")
+
+auto_refresh = st.sidebar.checkbox("🔄 Live Mode")
+
+refresh_interval = st.sidebar.slider(
+    "⏱ Refresh Interval (seconds)",
+    min_value=10,
+    max_value=60,
+    value=15
+)
 
 # ================= CONFIG =================
 SYMBOLS = [
@@ -21,14 +35,14 @@ CAPITAL = 100000
 RISK_PER_TRADE = 0.02
 
 # ================= CACHE =================
-@st.cache_data
+@st.cache_data(ttl=60)
 def load_data(symbol):
     return get_data(symbol)
 
 # ================= MAIN LOOP =================
 for symbol in SYMBOLS:
 
-    st.markdown(f"---")
+    st.markdown("---")
     st.subheader(f"📊 {symbol}")
 
     try:
@@ -66,3 +80,9 @@ for symbol in SYMBOLS:
 
     except Exception as e:
         st.error(f"{symbol} Error: {e}")
+
+# ================= AUTO REFRESH =================
+if auto_refresh:
+    st.info(f"🔄 Auto refreshing every {refresh_interval} seconds...")
+    time.sleep(refresh_interval)
+    st.rerun()
