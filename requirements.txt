@@ -3,5 +3,4 @@ numpy
 scikit-learn
 ta
 yfinance
-kiteconnect
 streamlit
