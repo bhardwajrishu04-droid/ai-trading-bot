@@ -13,7 +13,13 @@ CAPITAL = 100000
 RISK_PER_TRADE = 0.02
 
 try:
-    data = get_data(SYMBOL)
+    import streamlit as st
+
+@st.cache_data
+def load_data(symbol):
+    return get_data(symbol)
+
+data = load_data(SYMBOL)
     data = add_indicators(data)
 
     model = train_model(data)
