@@ -3,18 +3,27 @@ import pandas as pd
 import time
 
 def get_data(symbol):
-    time.sleep(2)  # ✅ prevent rate limit
+    try:
+        time.sleep(5)  # prevent rate limit
 
-    data = yf.download(symbol, period="1y", interval="1d", threads=False)
+        data = yf.download(
+            symbol,
+            period="1y",
+            interval="1d",
+            threads=False
+        )
 
-    # ✅ check empty data
-    if data.empty:
-        raise ValueError("No data fetched. Try again later.")
+        if data.empty:
+            raise ValueError("No data fetched")
 
-    # Remove multi-index if exists
-    if isinstance(data.columns, pd.MultiIndex):
-        data.columns = data.columns.get_level_values(0)
+        # Fix multi-index if exists
+        if isinstance(data.columns, pd.MultiIndex):
+            data.columns = data.columns.get_level_values(0)
 
-    data = data.dropna()
+        data = data.dropna()
 
-    return data
+        return data
+
+    except Exception as e:
+        print(f"Data error: {e}")
+        return pd.DataFrame()
