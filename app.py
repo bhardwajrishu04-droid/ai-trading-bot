@@ -5,10 +5,10 @@ from model import train_model
 from strategy import get_signal
 from risk_management import position_size
 
-# UI Title
-st.title("AI Trading Bot")
+# ================= UI =================
+st.title("🤖 AI Trading Bot")
 
-# Config
+# ================= CONFIG =================
 SYMBOLS = [
     "RELIANCE.NS",
     "TCS.NS",
@@ -16,46 +16,53 @@ SYMBOLS = [
     "HDFCBANK.NS",
     "ICICIBANK.NS"
 ]
+
 CAPITAL = 100000
 RISK_PER_TRADE = 0.02
 
-# Cache data
+# ================= CACHE =================
 @st.cache_data
 def load_data(symbol):
     return get_data(symbol)
 
-# Main execution
-try:
-    # Step 1: Load data
-    data = load_data(SYMBOL)
+# ================= MAIN LOOP =================
+for symbol in SYMBOLS:
 
-    # Step 2: Add indicators
-    data = add_indicators(data)
+    st.markdown(f"---")
+    st.subheader(f"📊 {symbol}")
 
-    # Step 3: Train model
-    model = train_model(data)
+    try:
+        # Step 1: Load data
+        data = load_data(symbol)
 
-    # Step 4: Generate signal
-    signal = get_signal(model, data)
+        # Step 2: Add indicators
+        data = add_indicators(data)
 
-    # Step 5: Position sizing
-    size = position_size(
-        CAPITAL,
-        RISK_PER_TRADE,
-        data['Close'].iloc[-1]
-    )
+        # Step 3: Train model
+        model = train_model(data)
 
-    # ================= UI =================
+        # Step 4: Generate signal
+        signal = get_signal(model, data)
 
-    st.subheader("📊 Signal")
-    st.success(signal)
+        # Step 5: Position sizing
+        price = data['Close'].iloc[-1]
+        size = position_size(CAPITAL, RISK_PER_TRADE, price)
 
-    st.subheader("💰 Trade Size")
-    st.write(size)
+        # ================= UI =================
 
-    st.subheader("📈 Price Chart")
-    st.line_chart(data['Close'])
+        # Signal display
+        if signal == "BUY":
+            st.success(f"Signal: {signal}")
+        elif signal == "SELL":
+            st.error(f"Signal: {signal}")
+        else:
+            st.warning(f"Signal: {signal}")
 
-except Exception as e:
-    st.error(f"Error: {e}")
-    st.stop()
+        # Trade size
+        st.write(f"💰 Trade Size: {size}")
+
+        # Chart
+        st.line_chart(data['Close'])
+
+    except Exception as e:
+        st.error(f"{symbol} Error: {e}")
