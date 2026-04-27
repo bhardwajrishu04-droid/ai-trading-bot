@@ -2,7 +2,7 @@ import ta
 
 def add_indicators(data):
     # 🔥 FORCE 1D SERIES (FINAL FIX)
-    close = data[['Close']].iloc[:, 0]
+    close = data['Close']
 
     data['RSI'] = ta.momentum.RSIIndicator(close=close).rsi()
     data['EMA20'] = ta.trend.EMAIndicator(close=close, window=20).ema_indicator()
