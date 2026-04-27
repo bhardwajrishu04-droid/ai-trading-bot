@@ -9,7 +9,13 @@ from risk_management import position_size
 st.title("AI Trading Bot")
 
 # Config
-SYMBOL = "RELIANCE.NS"
+SYMBOLS = [
+    "RELIANCE.NS",
+    "TCS.NS",
+    "INFY.NS",
+    "HDFCBANK.NS",
+    "ICICIBANK.NS"
+]
 CAPITAL = 100000
 RISK_PER_TRADE = 0.02
 
