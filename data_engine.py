@@ -5,7 +5,7 @@ import time
 def get_data(symbol):
     time.sleep(2)  # ✅ prevent rate limit
 
-    data = yf.download(symbol, period="1y", interval="1d")
+    data = yf.download(symbol, period="1y", interval="1d", threads=False)
 
     # ✅ check empty data
     if data.empty:
