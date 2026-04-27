@@ -20,6 +20,8 @@ def load_data(symbol):
 # ✅ Safe execution
 try:
     data = load_data(SYMBOL)
+    data = add_indicators(data)
+
 except Exception as e:
     st.error(f"Error: {e}")
     st.stop()
