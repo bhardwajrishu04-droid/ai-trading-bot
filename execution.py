@@ -4,9 +4,11 @@ from kiteconnect import KiteConnect
 with open("access_token.txt", "r") as f:
     ACCESS_TOKEN = f.read().strip()
 
-API_KEY = "YOUR_API_KEY"
+# ================= API KEY =================
+API_KEY = "6c3uhkm1yw56fd8u"
 
-kite = KiteConnect(api_key=API_KEY = "6c3uhkm1yw56fd8u")
+# ================= INIT =================
+kite = KiteConnect(api_key=API_KEY)
 kite.set_access_token(ACCESS_TOKEN)
 
 # ================= PLACE ORDER FUNCTION =================
