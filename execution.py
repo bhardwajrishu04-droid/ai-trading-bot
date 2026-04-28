@@ -6,7 +6,7 @@ with open("access_token.txt", "r") as f:
 
 API_KEY = "YOUR_API_KEY"
 
-kite = KiteConnect(api_key=API_KEY)
+kite = KiteConnect(api_key=API_KEY = "6c3uhkm1yw56fd8u")
 kite.set_access_token(ACCESS_TOKEN)
 
 # ================= PLACE ORDER FUNCTION =================
