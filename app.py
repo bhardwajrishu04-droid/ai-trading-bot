@@ -37,7 +37,7 @@ df = add_indicators(df)
 model = train_model(df)
 
 # ===== SIGNAL =====
-signal = get_signal(df, model)
+signal = get_signal(model, df)
 
 # ===== POSITION SIZE =====
 price = df["Close"].iloc[-1]
