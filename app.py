@@ -81,7 +81,7 @@ if "last_signal" not in st.session_state:
 # ===== MANUAL TRADE =====
 if st.button("🚀 Execute Trade"):
     if signal != st.session_state.last_signal:
-        result = place_order(symbol, signal, qty)
+        result = place_order_with_sl(symbol, signal, qty, price, stop_loss_percent)
         st.success(result)
         st.session_state.last_signal = signal
     else:
@@ -92,7 +92,7 @@ if auto_trade:
     st.warning("⚠️ Auto Trading Enabled")
 
     if signal in ["BUY", "SELL"] and signal != st.session_state.last_signal:
-        result = place_order(symbol, signal, qty)
+        result = place_order_with_sl(symbol, signal, qty, price, stop_loss_percent)
         st.success(result)
         st.session_state.last_signal = signal
 
