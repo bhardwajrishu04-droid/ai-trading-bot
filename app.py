@@ -6,7 +6,7 @@ from indicators import add_indicators
 from model import train_model
 from strategy import get_signal
 from risk_management import position_size
-from execution import place_order
+from execution import place_order_with_sl
 
 # ===== UI =====
 st.title("🤖 AI Trading Bot")
