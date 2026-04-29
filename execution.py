@@ -1,8 +1,9 @@
 from kiteconnect import KiteConnect
 
 # Load token
-with open("access_token.txt", "r") as f:
-    ACCESS_TOKEN = f.read().strip()
+import os
+
+ACCESS_TOKEN = os.getenv("ACCESS_TOKEN", "")
 
 API_KEY = "6c3uhkm1yw56fd8u"
 
